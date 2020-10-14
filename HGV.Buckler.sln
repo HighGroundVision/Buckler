@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30523.141
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HGV.Buckler.Identity", "HGV.Buckler.Identity\HGV.Buckler.Identity.csproj", "{4120FFF2-ED9F-4D43-9944-E6758CA373AB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4120FFF2-ED9F-4D43-9944-E6758CA373AB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4120FFF2-ED9F-4D43-9944-E6758CA373AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4120FFF2-ED9F-4D43-9944-E6758CA373AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4120FFF2-ED9F-4D43-9944-E6758CA373AB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E05444F0-C722-4991-A008-4A48DB547FEA}
+	EndGlobalSection
+EndGlobal
