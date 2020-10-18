@@ -46,7 +46,6 @@ namespace HGV.Buckler.Identity.Services
                 {
                     var steamId = l.ProviderKey.Replace("https://steamcommunity.com/openid/id/", "");
                     claims.Add(new Claim("steam", steamId));
-                    claims.Add(new Claim("dota", steamId));
                 }
                 
             }
