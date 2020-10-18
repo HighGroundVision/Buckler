@@ -1,27 +1,33 @@
 ﻿using IdentityServer4.Models;
+using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
 
 namespace HGV.Buckler.Identity
 {
     public static class IdentityServerConfig
     {
-         public static IEnumerable<IdentityResource> IdentityResources =>
-            new IdentityResource[]
+        public static IEnumerable<IdentityResource> IdentityResources(IConfiguration configuration)
+        {
+            return new IdentityResource[]
             {
                 new IdentityResources.OpenId(),
                 new IdentityResources.Email(),
                 new IdentityResource("discord", new[] { "discord" }),
                 new IdentityResource("steam", new[] { "steam" }),
             };
-
-        public static IEnumerable<ApiScope> ApiScopes =>
-            new List<ApiScope>
+        }
+            
+        public static IEnumerable<ApiScope> ApiScopes(IConfiguration configuration)
+        {
+            return new List<ApiScope>
             {
                 new ApiScope("api", "API Access")
             };
+        }   
 
-        public static IEnumerable<Client> Clients =>
-            new Client[]
+        public static IEnumerable<Client> Clients(IConfiguration configuration)
+        {
+            return new Client[]
             {
                 // m2m client credentials flow client
                 new Client
@@ -30,23 +36,41 @@ namespace HGV.Buckler.Identity
                     ClientName = "Client Credentials Client",
 
                     AllowedGrantTypes = GrantTypes.ClientCredentials,
-                    ClientSecrets = { new Secret("511536EF-F270-4058-80CA-1C89C192F69A".Sha256()) },
+                    ClientSecrets = { new Secret(configuration["IdentityServer:Clients:m2m:Key"].Sha256()) },
 
-                    AllowedScopes = { "api", "email", "discord", "steam" }
+                    AllowedScopes = { "api" }
+                },
+                // JS Client
+                new Client
+                {
+                    ClientId = "js",
+                    ClientName = "JavaScript Client",
+                    ClientSecrets = { new Secret(configuration["IdentityServer:Clients:js:Key"].Sha256()) },
+
+                    AllowedGrantTypes = GrantTypes.Code,
+                    RequireClientSecret = false,
+
+                    RedirectUris =           { configuration["IdentityServer:Clients:js:Uri"] + "/callback.html" },
+                    PostLogoutRedirectUris = { configuration["IdentityServer:Clients:js:Uri"] + "/index.html" },
+                    AllowedCorsOrigins =     { configuration["IdentityServer:Clients:js:Uri"] },
+
+                    AllowedScopes = { "openid", "api", "email", "discord", "steam" }
                 },
                 // Postman
                 new Client
                 {
                     ClientId = "postman",
-                    ClientSecrets = { new Secret("f4dfa43a-063b-4060-8e3e-1b860e403bb7".Sha256()) },
+                    ClientName = "Postman Client",
+                    ClientSecrets = { new Secret(configuration["IdentityServer:Clients:postman:Key"].Sha256()) },
 
                     AllowedGrantTypes = GrantTypes.Code,
 
-                    RedirectUris = { "https://oauth.pstmn.io/v1/callback" },
+                    RedirectUris = { configuration["IdentityServer:Clients:postman:Uri"] },
 
                     AllowOfflineAccess = true,
                     AllowedScopes = { "openid", "api", "email", "discord", "steam" }
                 },
             };
+        }
     }
 }

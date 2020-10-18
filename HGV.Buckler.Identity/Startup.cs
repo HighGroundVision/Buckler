@@ -28,8 +28,6 @@ namespace HGV.Buckler.Identity
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //TODO: Add IDS4 - https://identityserver4.readthedocs.io/en/latest/
-
             services.Configure<AuthMessageSenderOptions>(Configuration.GetSection(AuthMessageSenderOptions.Prefix));
 
             services.AddDbContext<ApplicationDbContext>(o => o.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
@@ -58,9 +56,9 @@ namespace HGV.Buckler.Identity
                 options.Events.RaiseSuccessEvents = true;
                 options.EmitStaticAudienceClaim = true; // see https://identityserver4.readthedocs.io/en/latest/topics/resources.html
             })
-            .AddInMemoryApiScopes(IdentityServerConfig.ApiScopes)
-            .AddInMemoryIdentityResources(IdentityServerConfig.IdentityResources)
-            .AddInMemoryClients(IdentityServerConfig.Clients)
+            .AddInMemoryApiScopes(IdentityServerConfig.ApiScopes(Configuration))
+            .AddInMemoryIdentityResources(IdentityServerConfig.IdentityResources(Configuration))
+            .AddInMemoryClients(IdentityServerConfig.Clients(Configuration))
             .AddAspNetIdentity<IdentityUser>()
             .AddProfileService<IdentityWithAdditionalClaimsProfileService>();
 
