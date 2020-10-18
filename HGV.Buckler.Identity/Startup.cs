@@ -1,5 +1,6 @@
 using HGV.Buckler.Identity.Data;
 using HGV.Buckler.Identity.Services;
+using HGV.Daedalus;
 using IdentityServer4.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -29,6 +30,11 @@ namespace HGV.Buckler.Identity
         public void ConfigureServices(IServiceCollection services)
         {
             services.Configure<AuthMessageSenderOptions>(Configuration.GetSection(AuthMessageSenderOptions.Prefix));
+
+            services.AddHttpClient();
+
+            services.AddSingleton<ISteamKeyProvider, SteamKeyProvider>();
+            services.AddSingleton<IDotaApiClient, DotaApiClient>();
 
             services.AddDbContext<ApplicationDbContext>(o => o.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
 
@@ -84,6 +90,7 @@ namespace HGV.Buckler.Identity
                     o.ClientSecret = Configuration["Authentication:Discord:ClientSecret"];
                 });
 
+            
             services.AddRazorPages();
         }
 
@@ -98,13 +105,11 @@ namespace HGV.Buckler.Identity
             else
             {
                 app.UseExceptionHandler("/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-                app.UseHsts();
+                app.UseHsts(); // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
             }
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
             app.UseRouting();
             app.UseIdentityServer();
             app.UseAuthentication();

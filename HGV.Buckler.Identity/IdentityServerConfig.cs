@@ -11,9 +11,6 @@ namespace HGV.Buckler.Identity
             return new IdentityResource[]
             {
                 new IdentityResources.OpenId(),
-                new IdentityResources.Email(),
-                new IdentityResource("discord", new[] { "discord" }),
-                new IdentityResource("steam", new[] { "steam" }),
             };
         }
             
@@ -21,7 +18,10 @@ namespace HGV.Buckler.Identity
         {
             return new List<ApiScope>
             {
-                new ApiScope("api", "API Access")
+                new ApiScope("api", "API Access"),
+                new ApiScope("email", "Verified Email Address", new[] { "email" }),
+                new ApiScope("discord", "Discord Id", new[] { "discord_id" }),
+                new ApiScope("steam", "Steam Identity", new[] { "steam_id", "steam_persona", "steam_avatar" })
             };
         }   
 
@@ -38,7 +38,8 @@ namespace HGV.Buckler.Identity
                     AllowedGrantTypes = GrantTypes.ClientCredentials,
                     ClientSecrets = { new Secret(configuration["IdentityServer:Clients:m2m:Key"].Sha256()) },
 
-                    AllowedScopes = { "api" }
+                    AllowedScopes = { "api" },
+                    
                 },
                 // JS Client
                 new Client

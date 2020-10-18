@@ -42,8 +42,7 @@ namespace HGV.Buckler.Identity.Areas.Identity.Pages.Account
 
             Email = email;
             
-            // Once you add a real email sender, you should remove this code that lets you confirm the account
-            
+            // TODO: Send Grid issue resolved DisplayConfirmAccountLink = false
             DisplayConfirmAccountLink = true; 
             if (DisplayConfirmAccountLink)
             {
