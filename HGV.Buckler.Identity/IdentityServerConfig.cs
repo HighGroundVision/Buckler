@@ -9,12 +9,15 @@ namespace HGV.Buckler.Identity
             new IdentityResource[]
             {
                 new IdentityResources.OpenId(),
+                new IdentityResources.Email(),
+                new IdentityResource("discord", new[] { "discord" }),
+                new IdentityResource("steam", new[] { "steam" }),
             };
 
         public static IEnumerable<ApiScope> ApiScopes =>
             new List<ApiScope>
             {
-                new ApiScope("api", "API Access", new[] {"email", "discord", "steam" })
+                new ApiScope("api", "API Access")
             };
 
         public static IEnumerable<Client> Clients =>
@@ -29,7 +32,7 @@ namespace HGV.Buckler.Identity
                     AllowedGrantTypes = GrantTypes.ClientCredentials,
                     ClientSecrets = { new Secret("511536EF-F270-4058-80CA-1C89C192F69A".Sha256()) },
 
-                    AllowedScopes = { "api" }
+                    AllowedScopes = { "api", "email", "discord", "steam" }
                 },
                 // Postman
                 new Client
@@ -42,7 +45,7 @@ namespace HGV.Buckler.Identity
                     RedirectUris = { "https://oauth.pstmn.io/v1/callback" },
 
                     AllowOfflineAccess = true,
-                    AllowedScopes = { "openid", "api" }
+                    AllowedScopes = { "openid", "api", "email", "discord", "steam" }
                 },
             };
     }
