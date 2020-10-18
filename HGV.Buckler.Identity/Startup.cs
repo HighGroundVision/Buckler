@@ -51,6 +51,7 @@ namespace HGV.Buckler.Identity
 
             var builder = services.AddIdentityServer(options =>
             {
+                options.IssuerUri = "https://buckler.highgroundvision.com/";
                 options.Events.RaiseErrorEvents = true;
                 options.Events.RaiseInformationEvents = true;
                 options.Events.RaiseFailureEvents = true;
