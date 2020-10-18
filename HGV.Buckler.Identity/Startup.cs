@@ -60,6 +60,7 @@ namespace HGV.Buckler.Identity
             })
             .AddInMemoryIdentityResources(IdentityServerConfig.IdentityResources)
             .AddInMemoryClients(IdentityServerConfig.Clients)
+            .AddInMemoryApiScopes(IdentityServerConfig.ApiScopes)
             .AddAspNetIdentity<IdentityUser>()
             .AddProfileService<IdentityWithAdditionalClaimsProfileService>();
 
