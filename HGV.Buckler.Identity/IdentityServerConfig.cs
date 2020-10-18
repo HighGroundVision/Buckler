@@ -9,13 +9,12 @@ namespace HGV.Buckler.Identity
             new IdentityResource[]
             {
                 new IdentityResources.OpenId(),
-                new IdentityResource("api", new[] {"email", "discord", "steam" })
             };
 
         public static IEnumerable<ApiScope> ApiScopes =>
             new List<ApiScope>
             {
-                new ApiScope("api")
+                new ApiScope("api", "API Access", new[] {"email", "discord", "steam" })
             };
 
         public static IEnumerable<Client> Clients =>
