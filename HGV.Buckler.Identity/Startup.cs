@@ -89,6 +89,8 @@ namespace HGV.Buckler.Identity
                     o.ClientId = Configuration["Authentication:Discord:ClientId"];
                     o.ClientSecret = Configuration["Authentication:Discord:ClientSecret"];
                 });
+
+             services.AddCors();
             
             services.AddRazorPages();
         }
@@ -110,6 +112,7 @@ namespace HGV.Buckler.Identity
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseRouting();
+            app.UseCors(o => o.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
             app.UseIdentityServer();
             app.UseAuthentication();
             app.UseAuthorization();
