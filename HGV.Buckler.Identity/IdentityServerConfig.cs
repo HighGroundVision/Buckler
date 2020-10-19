@@ -53,8 +53,8 @@ namespace HGV.Buckler.Identity
 
                     RedirectUris =           { configuration["IdentityServer:Clients:js:Uri"] + "/callback" },
                     PostLogoutRedirectUris = { configuration["IdentityServer:Clients:js:Uri"] },
-                    AllowedCorsOrigins =     { configuration["IdentityServer:Clients:js:Uri"] },
-
+                    // AllowedCorsOrigins =     { "*" },  // { configuration["IdentityServer:Clients:js:Uri"] },
+                    
                     AllowedScopes = { "openid", "api", "email", "discord", "steam" }
                 },
                 // Postman
