@@ -90,7 +90,16 @@ namespace HGV.Buckler.Identity
                     o.ClientSecret = Configuration["Authentication:Discord:ClientSecret"];
                 });
 
-             services.AddCors();
+             services.AddCors(options =>
+            {
+                // this defines a CORS policy called "default"
+                options.AddPolicy("default", policy =>
+                {
+                    policy.WithOrigins("https://localhost:8080")
+                        .AllowAnyHeader()
+                        .AllowAnyMethod();
+                });
+            });
             
             services.AddRazorPages();
         }
@@ -112,7 +121,7 @@ namespace HGV.Buckler.Identity
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseRouting();
-            app.UseCors(o => o.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
+            app.UseCors("default");
             app.UseIdentityServer();
             app.UseAuthentication();
             app.UseAuthorization();
