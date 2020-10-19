@@ -51,8 +51,8 @@ namespace HGV.Buckler.Identity
                     AllowedGrantTypes = GrantTypes.Code,
                     RequireClientSecret = false,
 
-                    RedirectUris =           { configuration["IdentityServer:Clients:js:Uri"] + "/callback.html" },
-                    PostLogoutRedirectUris = { configuration["IdentityServer:Clients:js:Uri"] + "/index.html" },
+                    RedirectUris =           { configuration["IdentityServer:Clients:js:Uri"] + "/callback" },
+                    PostLogoutRedirectUris = { configuration["IdentityServer:Clients:js:Uri"] },
                     AllowedCorsOrigins =     { configuration["IdentityServer:Clients:js:Uri"] },
 
                     AllowedScopes = { "openid", "api", "email", "discord", "steam" }
