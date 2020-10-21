@@ -30,21 +30,27 @@ namespace HGV.Buckler.Identity.Areas.Identity.Pages.Account
 
         public async Task<IActionResult> OnGetAsync(string logoutId = null)
         {
-            _logger.LogInformation("User logged out.");
-
-            await _signInManager.SignOutAsync();
-
             if(string.IsNullOrWhiteSpace(logoutId))
+            {
+                await _signInManager.SignOutAsync();
+                _logger.LogInformation("User logged out.");
                 return RedirectToPage("./LogoutSuccess");
-
-            var request = await _interaction.GetLogoutContextAsync(logoutId);
-
-            this.HttpContext.Response.Headers.Add("X-LogoutRequest", Newtonsoft.Json.JsonConvert.SerializeObject(request));
-
-            if(string.IsNullOrWhiteSpace(request.PostLogoutRedirectUri))
-                return RedirectToPage("./LogoutSuccess");
+            }
             else
-                return Redirect(request.PostLogoutRedirectUri);
+            {
+                var context = await _interaction.GetLogoutContextAsync(logoutId);
+
+                var json = Newtonsoft.Json.JsonConvert.SerializeObject(context);
+                this.HttpContext.Response.Headers.Add("X-LogoutContext", json);
+
+                 await _signInManager.SignOutAsync();
+                _logger.LogInformation("User logged out.");
+
+                 if(string.IsNullOrWhiteSpace(context.PostLogoutRedirectUri))
+                    return RedirectToPage("./LogoutSuccess");
+                else
+                    return Redirect(context.PostLogoutRedirectUri);
+            }
         }
 
         /*
