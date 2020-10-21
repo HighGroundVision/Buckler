@@ -38,6 +38,9 @@ namespace HGV.Buckler.Identity.Areas.Identity.Pages.Account
                 return RedirectToPage("./LogoutSuccess");
 
             var request = await _interaction.GetLogoutContextAsync(logoutId);
+
+            this.HttpContext.Response.Headers.Add("X-LogoutRequest", Newtonsoft.Json.JsonConvert.SerializeObject(request));
+
             if(string.IsNullOrWhiteSpace(request.PostLogoutRedirectUri))
                 return RedirectToPage("./LogoutSuccess");
             else
