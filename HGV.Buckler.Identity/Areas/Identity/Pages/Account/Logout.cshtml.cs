@@ -31,17 +31,17 @@ namespace HGV.Buckler.Identity.Areas.Identity.Pages.Account
         public async Task<IActionResult> OnGetAsync(string logoutId = null)
         {
             _logger.LogInformation("User logged out.");
+
             await _signInManager.SignOutAsync();
 
             if(string.IsNullOrWhiteSpace(logoutId))
-            {
                 return RedirectToPage("./LogoutSuccess");
-            }
+
+            var request = await _interaction.GetLogoutContextAsync(logoutId);
+            if(string.IsNullOrWhiteSpace(request.PostLogoutRedirectUri))
+                return RedirectToPage("./LogoutSuccess");
             else
-            {
-                var request = await _interaction.GetLogoutContextAsync(logoutId);
                 return Redirect(request.PostLogoutRedirectUri);
-            }
         }
 
         /*
