@@ -38,6 +38,8 @@ namespace HGV.Buckler.Identity
 
             services.AddDbContext<ApplicationDbContext>(o => o.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
 
+            // https://github.com/dotnet/aspnetcore/blob/master/src/Identity/Extensions.Core/src/IUserConfirmation.cs
+
             services.AddDefaultIdentity<IdentityUser>(o => { 
                 o.SignIn.RequireConfirmedAccount = true;
                 o.Tokens.ProviderMap.Add("CustomEmailConfirmation",new TokenProviderDescriptor(typeof(CustomEmailConfirmationTokenProvider<IdentityUser>)));

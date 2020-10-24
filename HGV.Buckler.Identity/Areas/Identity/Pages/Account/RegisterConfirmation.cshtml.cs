@@ -42,8 +42,7 @@ namespace HGV.Buckler.Identity.Areas.Identity.Pages.Account
 
             Email = email;
             
-            // TODO: Send Grid issue resolved DisplayConfirmAccountLink = false
-            DisplayConfirmAccountLink = true; 
+            DisplayConfirmAccountLink = false; 
             if (DisplayConfirmAccountLink)
             {
                 var userId = await _userManager.GetUserIdAsync(user);
