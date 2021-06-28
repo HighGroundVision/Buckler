@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 
 namespace HGV.Buckler.Identity.Services
 {
+    
+
     public class EmailSender : IEmailSender
     {
          public EmailSender(IOptions<AuthMessageSenderOptions> optionsAccessor)
